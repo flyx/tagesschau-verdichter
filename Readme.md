@@ -1,15 +1,9 @@
-<style>
-  #title {
-    font-size: x-large;
-    font-weight: bold;
-  }
-</style>
-
-<p align="center" id="title">Tagesschau Verdichter</p>
-
-<p align="center">
-  <a href="https://raw.githubusercontent.com/flyx/tagesschau-verdichter/neckar/tagesschau-verdichter.user.css"><img src="https://img.shields.io/badge/Install%20directly%20with-Stylus-285959.svg"></a>
-</p>
+<header>
+  <h1 align="center">Tagesschau Verdichter</h1>
+  <p align="center">
+    <a href="https://raw.githubusercontent.com/flyx/tagesschau-verdichter/neckar/tagesschau-verdichter.user.css"><img src="https://img.shields.io/badge/Install%20directly%20with-Stylus-285959.svg"></a>
+  </p>
+</header>
 
 ![](screenshot.png)
 
