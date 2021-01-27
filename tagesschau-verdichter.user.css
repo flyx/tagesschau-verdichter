@@ -1,0 +1,325 @@
+/* ==UserStyle==
+@name           Tagesschau Layout-Modifikator
+@namespace      flyx.org
+@version        1.0.0
+@description    Verschiedene wählbare Optionen, um das neue Mobile-First-Layout ein Stück weit in die Desktop-Welt zurückzuführen
+@author         flyx
+@preprocessor   less
+@var checkbox background "Hintergrundbild" 1
+@var select teaser "Teaser" {
+  "Normal": "normal",
+  "Zweispaltig, nur Top-Artikel mit Bildern": "twocolumn",
+  "Newsticker mit Bildern": "newsticker-images",
+  "Newsticker ohne Bilder": "newsticker"
+}
+@var select menu "Menü" {
+  "Im Hamburger": "normal",
+  "Rechts außen": "right",
+  "Rechts innen": "right-inset",
+  "Links außen": "left"
+}
+==/UserStyle== */
+
+@-moz-document domain("tagesschau.de") {
+    
+    /** Hintergrundbild */
+    
+    body when (@background = 1) {
+        background: url(/resources/framework/img/tagesschau/background/base.jpg) fixed;
+    }
+    
+    /** Teaser-Layout */
+    
+    #images-top() when (@teaser = newsticker) {
+        display: none;
+    }
+    #images-top() when (@teaser = newsticker-images) {
+        flex-basis: 20%;
+    }
+    #images-other() when (@teaser = twocolumn), (@teaser = newsticker) {
+        display: none;
+    }
+    #images-other() when (@teaser = newsticker-images) {
+        flex-basis: 20%;
+    }
+    
+    #teasertext-top() when (@teaser = newsticker-images) {
+        flex-basis: 80%;
+    }
+    #teasertext-other() when (@teaser = twocolumn), (@teaser = newsticker) {
+        width: 100%;
+    }
+    #teasertext-other() when (@teaser = newsticker-images) {
+        flex-basis: 80%;
+    }
+    #teasergroup() when (@teaser = twocolumn) {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    #teasergroupnext() when (@teaser = newsticker) {
+        margin-top: 0;
+    }
+    #teaser() when (@teaser = newsticker-images) {
+        display: flex;
+    }
+    #teaser() when (@teaser = newsticker) {
+        padding-bottom: 0;
+    }
+    #teaser-other() when (@teaser = twocolumn) {
+        flex-basis: 50%;
+    }
+    #teaser-link() when (@teaser = newsticker-images) {
+        flex-basis: 100%;
+        display: flex;
+    }
+    
+    #shorttext() when (@teaser = newsticker-images), (@teaser = newsticker) {
+        display: none;
+    }
+    #shorttext() when not (@teaser = normal) {
+        font-size: 1.7rem;
+        padding-bottom: 3.5rem;
+    }
+    
+    #teaser-tag() when not (@teaser = normal) {
+        font-size: 1.2rem;
+    }
+    
+    #topline() when not (@teaser = normal) {
+        font-size: 1.4rem;
+        margin-bottom: .6rem;
+    }
+    
+    #headline() when (@teaser = normal) {
+        /* less fails if I remove this comment */
+    }
+    
+    #headline() when not (@teaser = normal) {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+    }
+    
+    #infotext() when not (@teaser = normal) {
+        font-size: 1.4rem;
+    }
+    
+    .teasergroup,
+    .listwrapper--docked > .list {
+        #teasergroup();
+    }
+    
+    .teasergroup:not(:first-child),
+    .listwrapper--docked {
+        #teasergroupnext();
+    }
+    
+    .teaser,
+    .list-element__large {
+        #teaser();
+    }
+    
+    .teaser.teaser--top when (@teaser = twocolumn) {
+        display: flex;
+    }
+    
+    .teaser.teaser--top > .columns.twelve when (@teaser = twocolumn) {
+        flex-basis: 50%;
+    }
+
+    .teaser:not(.teaser--top),
+    .list-element__large {
+        #teaser-other();
+    }
+    
+    .teaser > .teaser__link,
+    .list-element__large > .list-element__link {
+        #teaser-link();
+    }
+    
+    .teaser.teaser--top > .teaser__link > .columns.twelve:first-child,
+    .teaser.teaser--top > .columns.twelve:first-child {
+        #images-top();
+    }
+    
+    .teaser:not(.teaser--top) > .teaser__link > .columns.twelve.m-six:first-child,
+    .teaser:not(.teaser--top) > .columns.twelve:first-child,
+    .list-element__large > .list-element__link > .list-element__media,
+    .list-element__large > .list-element__media {
+        #images-other();
+    }
+    
+    .teaser.teaser--top > .teaser__link > .columns.twelve:last-child,
+    .teaser.teaser--top > .columns.twelve:not(:first-child) {
+        #teasertext-top();
+    }
+    
+    .teaser:not(.teaser--top) > .teaser__link > .columns.twelve.m-six:last-child,
+    .teaser:not(.teaser--top) > .columns.twelve.m-six:not(:first-child),
+    .list-element__large > .list-element__link > .list-element__teaserinfo,
+    .list-element__large > .list-element__teaserinfo {
+        #teasertext-other();
+    }
+    
+    .teaser .teaser__label > .label,
+    .list-element__topline-container > .label {
+        #teaser-tag();
+    }
+
+    .teaser .teaser__topline,
+    .list-element__headline-wrapper > .list-element__topline {
+        #topline();
+    }
+
+    .teaser .teaser__headline,
+    .list-element__headline-wrapper > .list-element__headline {
+        #headline();
+    }
+    
+    .teaser .teaser__shorttext,
+    .list-element__large .list-element__shorttext {
+        #shorttext();
+    }
+    
+    .teaser .mubu-container__infotext {
+        #infotext();
+    }
+    
+    .teaser .teaser__medialinks when (@teaser = newsticker), (@teaser = newsticker-images) {
+        display: none;
+    }
+    
+    /** Menü-Layout */
+    
+    .header when not (@menu = normal) {
+        transform: none;
+        max-width: 1024px;
+    }
+    
+    .header when (@menu = right) {
+        left: ~"min(calc((100vw - 1104px) / 2), calc(100vw - 1104px - (.3 * 1104px)))";
+    }
+    
+    .header when (@menu = left) {
+        left: ~"max(calc((100vw - 1104px) / 2), calc(.3 * 1104px))";
+    }
+    
+    .header when (@menu = right-inset) {
+        left: calc((100vw - 1104px) / 2);
+        width: calc(1104px - 8rem - .3*1104px);
+    }
+    
+    #content() when (@menu = right) {
+        margin-left: ~"min(calc((100vw - 1104px) / 2), calc(100vw - 1104px - (.3 * 1104px)))";
+    }
+    
+    #content() when (@menu = left) {
+        margin-left: ~"max(calc((100vw - 1104px) / 2), calc(.3 * 1104px))";
+    }
+    
+    #content() when (@menu = right-inset) {
+        margin-left: calc((100vw - 1104px) / 2);
+        max-width: calc(1024px - .3*1104px);
+    }
+    
+    .content-wrapper, .footer, .endline {
+        #content();
+    }
+    
+    .endline when not (@menu = normal) {
+        padding: .8rem 4rem 0 4rem;
+        box-sizing: unset;
+    }
+    
+    .header__burger__clickarea when not (@menu = normal) {
+        display: none;
+    }
+    
+    .burger-menu__eventstage when not (@menu = normal) {
+        position: absolute;
+        display: block;
+        top: 0;
+        padding: 2rem;
+        height: 100vh;
+        overflow-y: auto;
+        background-color: transparent;
+        width: calc(.3 * 1104px);
+    }
+    
+    .burger-menu__eventstage when (@menu = left) {
+        left: calc(-.3*1104px);
+    }
+    
+    .burger-menu__eventstage when (@menu = right) {
+        left: 1104px;
+    }
+    
+    .burger-menu__eventstage when (@menu = right-inset) {
+        left: calc(1104px - (.3 * 1104px));
+    }
+
+    .header__navigation > .overlay-scroll when not (@menu = normal) {
+        margin: 0;
+        padding: 0;
+    }
+
+    .header__navigation > .overlay-scroll::before when not (@menu = normal) {
+        display: none;
+    }
+
+    .header__navigation > .scrollspace when not (@menu = normal) {
+        display: none;
+    }
+
+    .header__navigation .expanderbox .header__navigation__list-title when not (@menu = normal) {
+        padding-right: 0;
+        padding-left: 0 !important;
+        margin-left: 0;
+    }
+    
+    :not(#burger-exp-body-10) + .header__navigation__list-title:not(.settings),
+    .header__navigation__list-title:first-child {
+        a.exp-header:not(#burger-exp-header-12) when not (@menu = normal) {
+            display: none;
+        }
+        .header__navigation__list--icondivider:after {
+            display: none;
+        }
+        a.header__navigation__list--maintitle when not (@menu = normal) {
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding: 1rem;
+        }
+    }
+    
+    .exp-body:not(#burger-exp-body-11):not(#burger-exp-body-12) when not (@menu = normal) {
+        height: unset !important;
+    }
+    
+    #burger-exp-body-1,
+    #burger-exp-body-2,
+    #burger-exp-body-3,
+    #burger-exp-body-4,
+    #burger-exp-body-6,
+    #burger-exp-body-7,
+    #burger-exp-body-10 {
+        .header__navigation__list > .menu__list__item:first-child when not (@menu = normal) {
+            display: none;
+        }
+    }
+    
+    .menu__list__item > .menu__link when not (@menu = normal) {
+        font-size: 1.4rem;
+        .menu__link {
+            padding: .75rem;
+        }
+    }
+    
+    .header__navigation__list when not (@menu = normal) {
+        padding: 0 2rem;
+        margin: .5rem 0 1rem;
+    }
+    
+    .list-bigfive--sportschau when not (@menu = normal) {
+        display: none;
+    }
+}
