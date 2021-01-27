@@ -25,6 +25,15 @@ Das UserCSS ist für hinreichend breite Monitore (effektiv mehr als ~1200px Brei
 
 Es funktioniert sowohl im normalen Modus wie auch im „Darkmode“.
 
+### Installation
+
+Dieses UserCSS ist für die Browsererweiterung [Stylus](https://add0n.com/stylus.html) konzipiert.
+Ist sie installiert, kann das Stylesheet über den Knopf oben geladen werden.
+Andere Browsererweiterungen, die UserCSS unterstützen, werden nicht offiziell unterstützt.
+
+Nach der Installation können im Popup von Stylus über das Zahnrad die einzelnen Optionen eingestellt werden.
+Standardmäßig wird nur das Hintergrundbild gesetzt (das kann auch abgestellt werden).
+
 ### Lizenz
 
 Dieses Werk ist lizensiert unter den Bedingungen der [WTFPL](/copying.txt).
